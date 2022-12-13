@@ -1,4 +1,5 @@
-﻿using BookManagement.Application.Dtos;
+﻿using BookManagement.API.Extensions;
+using BookManagement.Application.Dtos;
 using BookManagement.Application.Interfaces;
 using BookManagement.Repository.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +56,7 @@ public static class PersonEndpoints
         .RequireAuthorization();
 
         routes.MapGet("/api/people/find-all-paged/{pageNumber}/{pageSize}/{sortDirection}", 
-            async (IPersonService personService, [FromQuery] string? searchTerm, int pageNumber, int pageSize, string sortDirection) =>
+            async (HttpContext context, IPersonService personService, [FromQuery] string? searchTerm, int pageNumber, int pageSize, string sortDirection) =>
         {
             PageParams pageParams = new()
             {
@@ -67,7 +68,14 @@ public static class PersonEndpoints
 
             var people = await personService.GetAllAsync(pageParams);
 
-            return people == null || !people.Any() ? Results.NotFound() : Results.Ok(people);
+            if (people == null || !people.Any())
+            {
+                return Results.NotFound();
+            }
+
+            context.Response.AddPagination(people.CurrentPage, people.PageSize, people.TotalCount, people.TotalPages);
+
+            return Results.Ok(people);
         })
         .WithTags("Person")
         .WithName("GetPersonByPaged")

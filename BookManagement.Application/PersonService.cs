@@ -41,21 +41,35 @@ public class PersonService: IPersonService
 
     public async Task<IEnumerable<PersonDto>?> GetByNameAsync(string? firstName, string? lastName)
     {
-        var people = await _personRepository.GetByName(firstName, lastName);
-
-        if (people != null)
+        try
         {
-            return _mapper.Map<IEnumerable<PersonDto>>(people);
-        }
+            var people = await _personRepository.GetByName(firstName, lastName);
 
-        return null;
+            if (people != null)
+            {
+                return _mapper.Map<IEnumerable<PersonDto>>(people);
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<IEnumerable<PersonDto>> GetAllAsync()
     {
-        var people = await _personRepository.GetAllAsync();
+        try
+        {
+            var people = await _personRepository.GetAllAsync();
 
-        return _mapper.Map<IEnumerable<PersonDto>>(people);
+            return _mapper.Map<IEnumerable<PersonDto>>(people);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<PageList<PersonDto>?> GetAllAsync(PageParams pageParams)

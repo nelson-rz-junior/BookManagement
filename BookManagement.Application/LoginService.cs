@@ -28,46 +28,53 @@ public class LoginService: ILoginService
 
 	public async Task<SignInResult> Login(UserDto model)
 	{
-		bool credentialsIsValid = false;
-
-		if (model != null && !string.IsNullOrWhiteSpace(model.Login))
+		try
 		{
-			var user = await _userRepository.GetByLogin(model.Login);
-			credentialsIsValid = user != null && user.AccessKey == model.AccessKey;
-		}
+            bool credentialsIsValid = false;
 
-		if (credentialsIsValid)
+            if (model != null && !string.IsNullOrWhiteSpace(model.Login))
+            {
+                var user = await _userRepository.GetByLogin(model.Login);
+                credentialsIsValid = user != null && user.AccessKey == model.AccessKey;
+            }
+
+            if (credentialsIsValid)
+            {
+                ClaimsIdentity claimsIdentity = new(
+                    new GenericIdentity(model.Login, "Login"),
+                    new[]
+                    {
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.UniqueName, model.Login)
+                    }
+                );
+
+                DateTime createDate = DateTime.Now;
+                DateTime expirationDate = createDate.AddSeconds(_tokenConfigurations.ExpirationSeconds);
+
+                var handler = new JwtSecurityTokenHandler();
+                var token = CreateToken(claimsIdentity, createDate, expirationDate, handler);
+
+                return new SignInResult
+                {
+                    Autenticated = true,
+                    Created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                    AccessToken = token,
+                    Message = "OK"
+                };
+            }
+
+            return new SignInResult
+            {
+                Autenticated = false,
+                Message = "Failed to authenticate"
+            };
+        }
+		catch (Exception ex)
 		{
-			ClaimsIdentity claimsIdentity = new(
-				new GenericIdentity(model.Login, "Login"),
-				new[]
-				{
-					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-					new Claim(JwtRegisteredClaimNames.UniqueName, model.Login)
-				}
-			);
-
-			DateTime createDate = DateTime.Now;
-			DateTime expirationDate = createDate.AddSeconds(_tokenConfigurations.ExpirationSeconds);
-
-			var handler = new JwtSecurityTokenHandler();
-			var token = CreateToken(claimsIdentity, createDate, expirationDate, handler);
-
-			return new SignInResult
-			{
-				Autenticated = true,
-				Created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
-				Expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
-				AccessToken = token,
-				Message = "OK"
-			};
-		}
-
-        return new SignInResult
-        {
-            Autenticated = false,
-            Message = "Failed to authenticate"
-        };
+            throw new Exception(ex.Message);
+        }
     }
 
 	private string CreateToken(ClaimsIdentity claimsIdentity, DateTime createDate, DateTime expirationDate, JwtSecurityTokenHandler handler)

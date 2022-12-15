@@ -12,8 +12,8 @@ deploy:
   script:
     docker tag book-management-db:latest $DOCKER_USERNAME/book-management-db:$TRAVIS_JOB_ID;
     docker tag book-management-api:latest $DOCKER_USERNAME/book-management-api:$TRAVIS_JOB_ID;
-    docker push $DOCKER_USERNAME/book-management-db;
-    docker push $DOCKER_USERNAME/book-management-api;
+    docker push $DOCKER_USERNAME/book-management-db:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/book-management-api:$TRAVIS_JOB_ID;
   on:
     branch: master
 notifications:

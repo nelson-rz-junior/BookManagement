@@ -33,6 +33,8 @@ builder.Services.AddScoped<IFileService, FileService>();
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddCors();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -98,8 +100,12 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowAnyOrigin());
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookManagement.API v1"));

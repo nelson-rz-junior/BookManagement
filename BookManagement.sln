@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagement.Domain", "Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagement.Repository", "BookManagement.Repository\BookManagement.Repository.csproj", "{CDBC6003-C4B6-40BE-B827-84E321F1E4E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.API", "BookManagement.API\BookManagement.API.csproj", "{B084FF4F-B141-468C-9E16-660B0000240E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagement.API", "BookManagement.API\BookManagement.API.csproj", "{B084FF4F-B141-468C-9E16-660B0000240E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Application", "BookManagement.Application\BookManagement.Application.csproj", "{D448D08C-B8AA-4A08-BD6F-FF6878E70B2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagement.Application", "BookManagement.Application\BookManagement.Application.csproj", "{D448D08C-B8AA-4A08-BD6F-FF6878E70B2B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D4A2D79A-C066-4651-8DFB-A107AC62B85A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D448D08C-B8AA-4A08-BD6F-FF6878E70B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D448D08C-B8AA-4A08-BD6F-FF6878E70B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D448D08C-B8AA-4A08-BD6F-FF6878E70B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A2D79A-C066-4651-8DFB-A107AC62B85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A2D79A-C066-4651-8DFB-A107AC62B85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A2D79A-C066-4651-8DFB-A107AC62B85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A2D79A-C066-4651-8DFB-A107AC62B85A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

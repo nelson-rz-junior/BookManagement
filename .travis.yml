@@ -10,10 +10,10 @@ before_deploy:
 deploy:
   provider: script
   script:
-    docker tag book-management-db:latest $DOCKER_USERNAME/book-management-db:$TRAVIS_JOB_ID;
-    docker tag book-management-api:latest $DOCKER_USERNAME/book-management-api:$TRAVIS_JOB_ID;
-    docker push $DOCKER_USERNAME/book-management-db:$TRAVIS_JOB_ID;
-    docker push $DOCKER_USERNAME/book-management-api:$TRAVIS_JOB_ID;
+    docker tag book-management-db:latest $DOCKER_USERNAME/book-management-db:latest;
+    docker tag book-management-api:latest $DOCKER_USERNAME/book-management-api:latest;
+    docker push $DOCKER_USERNAME/book-management-db:latest;
+    docker push $DOCKER_USERNAME/book-management-api:latest;
   on:
     branch: master
 notifications:

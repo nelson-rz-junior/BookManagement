@@ -7,9 +7,6 @@ WORKDIR /usr/src/app
 # Copy initialization scripts
 COPY BookManagement.API/MsSql /usr/src/app
 
-# Grant permissions for the run-initialization script to be executable
-RUN chmod +x /usr/src/app/run-initialization.sh
-
 # Expose port 1433 in case accessing from other container
 # Expose port externally from docker-compose.yml
 EXPOSE 1433

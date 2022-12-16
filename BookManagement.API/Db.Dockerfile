@@ -1,18 +1,19 @@
 
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
+# Change active user to root
+USER root 
+
+# Set mssql as owner of the app directory
+RUN chown mssql /usr/src/app
+
+USER mssql
+
 # Create the app directory
 WORKDIR /usr/src/app
 
 # Copy initialization scripts
 COPY BookManagement.API/MsSql /usr/src/app
-
-USER root
-
-# Grant permissions for the run-initialization script to be executable
-RUN chmod +x /usr/src/app/run-initialization.sh
-
-USER mssql
 
 # Expose port 1433 in case accessing from other container
 # Expose port externally from docker-compose.yml

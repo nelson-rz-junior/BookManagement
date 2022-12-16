@@ -2,14 +2,12 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 # Change active user to root
-USER root
-
-# Create the app directory
-RUN mkdir -p /usr/src/app
+USER root 
 
 # Set mssql as owner of the app directory
 RUN chown mssql /usr/src/app
 
+# change back to user mssql
 USER mssql
 
 # Create the app directory

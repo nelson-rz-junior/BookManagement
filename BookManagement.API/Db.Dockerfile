@@ -12,4 +12,4 @@ COPY BookManagement.API/MsSql /usr/src/app
 EXPOSE 1433
 
 # Run Microsoft SQL Server and initialization script (at the same time)
-CMD /bin/sh ./entrypoint.sh
+ENTRYPOINT ["sh", "./entrypoint.sh"]

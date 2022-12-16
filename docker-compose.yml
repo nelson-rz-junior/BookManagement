@@ -1,6 +1,13 @@
 # docker-compose up
 # https://localhost:5001/swagger
 
+# Running SQLCMD in a Docker Container
+# docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_PID=Developer' -e "MSSQL_SA_PASSWORD=my1Strong2Key3" -p 1433:1433 --name sqlserver -d mcr.microsoft.com/mssql/server:2022-latest
+# docker exec -it sqlserver /bin/sh
+# /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'my1Strong2Key3'
+# 1> select physical_database_name from sys.databases
+# 2> Go
+
 version: '3.4'
 
 services:
